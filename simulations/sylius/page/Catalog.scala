@@ -4,7 +4,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import scala.concurrent.duration._
 
-object Catalog {
+final object Catalog {
   private val productsFeeder = csv("products.csv").random
   private val taxonsFeeder = csv("taxons.csv").random
 

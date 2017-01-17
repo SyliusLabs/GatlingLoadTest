@@ -5,7 +5,7 @@ import io.gatling.http.Predef._
 import scala.concurrent.duration._
 import sylius.page._
 
-class SyliusSimulation extends Simulation {
+final class SyliusSimulation extends Simulation {
   val httpProtocol = http
     .baseURL("http://demo.sylius.org")
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
