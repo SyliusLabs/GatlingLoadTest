@@ -12,12 +12,14 @@
 
 You can configure the way it works by passing Java options to the process:
 
-Option                | Description
-------------------------------------
-`load.numberOfUsers`  | Number of concurrent users on site
-`load.rampingTime`    | Time it takes for users to visit the site (in seconds)
-`load.simulationTime` | Time the application is tested (in minutes)
-`project.name`        | Project name
-`project.domain`      | Project domain
+### Configuration options
+
+| Option                | Description
+|-----------------------|------------
+| `load.numberOfUsers`  | Number of concurrent users on site
+| `load.rampingTime`    | Time it takes for users to visit the site (in seconds)
+| `load.simulationTime` | Time the application is tested (in minutes)
+| `project.name`        | Project name
+| `project.domain`      | Project domain
 
 `JAVA_OPTS="-Dproject.domain=example.com bin/gatling.sh -s sylius.SyliusLoadTest`
