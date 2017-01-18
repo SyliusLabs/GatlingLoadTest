@@ -13,8 +13,7 @@ final class ServerSettings extends Settings {
 
   def project() = ProjectSettings(
     name = System.getProperty("project.name", "Sylius").toString,
-    domain = System.getProperty("project.domain", "demo.sylius.org").toString,
-    dataDir = System.getProperty("project.dataDir", "data").toString
+    domain = System.getProperty("project.domain", "demo.sylius.org").toString
   )
 
   def gatling() = GatlingSettings(
