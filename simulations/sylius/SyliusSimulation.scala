@@ -8,12 +8,13 @@ import sylius.page._
 final class SyliusSimulation extends Simulation {
   val httpProtocol = http
     .baseURL("http://demo.sylius.org")
-    .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
-    .acceptLanguageHeader("en-US,en;q=0.5")
-    .acceptEncodingHeader("gzip, deflate")
-    .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:16.0) Gecko/20100101 Firefox/16.0")
+    .inferHtmlResources(BlackList(""".*\.js""", """.*\.css""", """.*\.gif""", """.*\.jpeg""", """.*\.jpg""", """.*\.ico""", """.*\.woff""", """.*\.(t|o)tf""", """.*\.png""", """.*\.woff2"""), WhiteList())
+    .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
+    .acceptEncodingHeader("gzip, deflate, sdch")
+    .acceptLanguageHeader("pl-PL,pl;q=0.8,en-US;q=0.6,en;q=0.4")
+    .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36")
 
-  val visiting = scenario("Just visiting").exec(Homepage.visit, Catalog.browseProducts, Catalog.showProduct)
+  val visiting = scenario("Just visiting").exec(Homepage.visit, Catalog.browseProducts, Catalog.showAndAddProduct, Checkout.showCart)
 
-  setUp(visiting.inject(rampUsers(10) over (10 seconds)).protocols(httpProtocol))
+  setUp(visiting.inject(rampUsers(3) over (10 seconds)).protocols(httpProtocol))
 }
