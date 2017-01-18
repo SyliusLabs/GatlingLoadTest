@@ -13,8 +13,8 @@ final object Product {
       .exec(
         http("Show simple product")
           .get("/products/${product_slug}")
-          .check(regex("""form name="sylius_add_to_cart" method="post" action="([^"]+)"""").saveAs("form_action"))
-          .check(regex("""name="sylius_add_to_cart\[_token\]" value="(.+?)"""").saveAs("_token"))
+          .check(regex("""form name="sylius_add_to_cart" method="post" action="([^"]++)"""").saveAs("form_action"))
+          .check(regex("""name="sylius_add_to_cart\[_token\]" value="([^"]++)"""").saveAs("_token"))
       )
   }
 
@@ -39,9 +39,9 @@ final object Product {
       .exec(
         http("Show configurable product")
           .get("/products/${product_slug}")
-          .check(regex("""form name="sylius_add_to_cart" method="post" action="([^"]+)"""").saveAs("form_action"))
-          .check(regex("""name="sylius_add_to_cart\[cartItem\]\[variant\]" required="required" value="([^"]+)" checked="checked"""").saveAs("variant_code"))
-          .check(regex("""name="sylius_add_to_cart\[_token\]" value="(.+?)"""").saveAs("_token"))
+          .check(regex("""form name="sylius_add_to_cart" method="post" action="([^"]++)"""").saveAs("form_action"))
+          .check(regex("""name="sylius_add_to_cart\[cartItem\]\[variant\]" required="required" value="([^"]++)" checked="checked"""").saveAs("variant_code"))
+          .check(regex("""name="sylius_add_to_cart\[_token\]" value="([^"]++)"""").saveAs("_token"))
       )
   }
 
