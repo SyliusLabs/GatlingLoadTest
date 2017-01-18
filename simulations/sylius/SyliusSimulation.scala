@@ -14,14 +14,15 @@ final class SyliusSimulation extends Simulation {
     .acceptLanguageHeader("pl-PL,pl;q=0.8,en-US;q=0.6,en;q=0.4")
     .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36")
 
-  val orderFlow = scenario("Order flow").exec(
-    Homepage.visit,
-    Catalog.browseProducts,
-    Catalog.showAndAddSimpleProduct,
-    Catalog.showAndAddConfigurableProduct,
-    Checkout.showCart,
-    Checkout.placeOrder
-  )
+  val simulation = scenario("Sylius Load Test")
+    .during(2 minutes) {
+      randomSwitch(
+        40d -> exec(Behaviours.abandonedCart),
+        25d -> exec(Behaviours.browseCatalog),
+        25d -> exec(Behaviours.searchCatalog),
+        10d -> exec(Behaviours.checkoutAsGuest)
+      )
+    }
 
-  setUp(orderFlow.inject(rampUsers(10) over (20 seconds)).protocols(httpProtocol))
+  setUp(simulation.inject(rampUsers(20) over (30 seconds)).protocols(httpProtocol))
 }

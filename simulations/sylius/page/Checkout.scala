@@ -5,17 +5,19 @@ import io.gatling.http.Predef._
 import scala.concurrent.duration._
 
 final object Checkout {
-  val showCart = {
-    exec(http("Show cart").get("/cart/")).pause(2)
+  val cart = {
+    exec(
+      http("Cart summary")
+        .get("/cart/")
+    )
   }
 
-  val placeOrder = {
+  val checkout = {
     exec(
       http("Checkout")
         .get("/checkout/")
         .check(regex("""name="sylius_checkout_address\[_token\]" value="([^"]++)"""").saveAs("_token"))
     )
-    .pause(1)
     .exec(
       http("Checkout addressing - AJAX province form")
         .get("/ajax/render-province-form?countryCode=US")
@@ -24,8 +26,10 @@ final object Checkout {
           "X-Requested-With" -> "XMLHttpRequest"
         ))
     )
-    .pause(3)
-    .exec(
+  }
+
+  val checkoutAddressingEmailValidation = {
+    exec(
       http("Checkout addressing - AJAX email checking")
         .get("/ajax/users/check?email=email%40address.com")
         .headers(Map(
@@ -34,8 +38,10 @@ final object Checkout {
         ))
         .check(status.is(404))
     )
-    .pause(15)
-    .exec(
+  }
+
+  val checkoutAddressing = {
+    exec(
       http("Checkout addressing")
         .post("/checkout/address")
         .headers(Map(
@@ -66,8 +72,10 @@ final object Checkout {
         .check(regex("""name="sylius_checkout_select_shipping\[shipments\]\[0\]\[method\]" required="required" value="([^"]++)" checked="checked"""").saveAs("shipping_method"))
         .check(regex("""name="sylius_checkout_select_shipping\[_token\]" value="([^"]++)"""").saveAs("_token"))
     )
-    .pause(2)
-    .exec(
+  }
+
+  val checkoutShipping = {
+    exec(
       http("Checkout shipping")
         .post("/checkout/select-shipping")
         .headers(Map(
@@ -80,8 +88,10 @@ final object Checkout {
         .check(regex("""name="sylius_checkout_select_payment\[payments\]\[0\]\[method\]" required="required" value="([^"]++)" checked="checked"""").saveAs("payment_method"))
         .check(regex("""name="sylius_checkout_select_payment\[_token\]" value="([^"]++)"""").saveAs("_token"))
     )
-    .pause(2)
-    .exec(
+  }
+
+  val checkoutPayment = {
+    exec(
       http("Checkout payment")
         .post("/checkout/select-payment")
         .headers(Map(
@@ -93,8 +103,10 @@ final object Checkout {
         .formParam("sylius_checkout_select_payment[_token]", "${_token}")
         .check(regex("""name="sylius_checkout_complete\[_token\]" value="([^"]++)"""").saveAs("_token"))
     )
-    .pause(2)
-    .exec(
+  }
+
+  val checkoutComplete = {
+    exec(
       http("Checkout complete")
         .post("/checkout/complete")
         .headers(Map(

@@ -5,7 +5,10 @@ import io.gatling.http.Predef._
 import scala.concurrent.duration._
 
 final object Homepage {
-  val visit = {
-    exec(http("Homepage").get("/")).pause(1)
+  val show = {
+    exec(
+      http("Homepage")
+        .get("/")
+    )
   }
 }
