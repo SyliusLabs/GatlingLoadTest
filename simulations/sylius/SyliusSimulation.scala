@@ -17,10 +17,11 @@ final class SyliusSimulation extends Simulation {
   val orderFlow = scenario("Order flow").exec(
     Homepage.visit,
     Catalog.browseProducts,
-    Catalog.showAndAddProduct,
+    Catalog.showAndAddSimpleProduct,
+    Catalog.showAndAddConfigurableProduct,
     Checkout.showCart,
     Checkout.placeOrder
   )
 
-  setUp(orderFlow.inject(rampUsers(3) over (10 seconds)).protocols(httpProtocol))
+  setUp(orderFlow.inject(rampUsers(10) over (20 seconds)).protocols(httpProtocol))
 }
