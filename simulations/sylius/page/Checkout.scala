@@ -46,7 +46,7 @@ final object Checkout {
         .post("/checkout/address")
         .headers(Map(
           "Accept-Encoding" -> "gzip, deflate",
-          "Origin" -> "http://demo.sylius.org"
+          "Origin" -> "http://${domain}"
         ))
         .formParam("_method", "PUT")
         .formParam("sylius_checkout_address[customer][email]", "email@address.com")
@@ -80,7 +80,7 @@ final object Checkout {
         .post("/checkout/select-shipping")
         .headers(Map(
           "Accept-Encoding" -> "gzip, deflate",
-          "Origin" -> "http://demo.sylius.org"
+          "Origin" -> "http://${domain}"
         ))
         .formParam("_method", "PUT")
         .formParam("sylius_checkout_select_shipping[shipments][0][method]", "${shipping_method}")
@@ -96,7 +96,7 @@ final object Checkout {
         .post("/checkout/select-payment")
         .headers(Map(
           "Accept-Encoding" -> "gzip, deflate",
-          "Origin" -> "http://demo.sylius.org"
+          "Origin" -> "http://${domain}"
         ))
         .formParam("_method", "PUT")
         .formParam("sylius_checkout_select_payment[payments][0][method]", "${payment_method}")
@@ -111,7 +111,7 @@ final object Checkout {
         .post("/checkout/complete")
         .headers(Map(
           "Accept-Encoding" -> "gzip, deflate",
-          "Origin" -> "http://demo.sylius.org"
+          "Origin" -> "http://${domain}"
         ))
         .formParam("_method", "PUT")
         .formParam("sylius_checkout_complete[notes]", "")

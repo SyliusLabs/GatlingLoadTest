@@ -26,7 +26,7 @@ final object Product {
           "Accept" -> "*/*",
           "Accept-Encoding" -> "gzip, deflate",
           "Content-Type" -> "application/x-www-form-urlencoded; charset=UTF-8",
-          "Origin" -> "http://demo.sylius.org",
+          "Origin" -> "http://${domain}",
           "X-Requested-With" -> "XMLHttpRequest"
         ))
         .formParam("sylius_add_to_cart[cartItem][quantity]", "1")
@@ -53,7 +53,7 @@ final object Product {
           "Accept" -> "*/*",
           "Accept-Encoding" -> "gzip, deflate",
           "Content-Type" -> "application/x-www-form-urlencoded; charset=UTF-8",
-          "Origin" -> "http://demo.sylius.org",
+          "Origin" -> "http://${domain}",
           "X-Requested-With" -> "XMLHttpRequest"
         ))
         .formParam("sylius_add_to_cart[cartItem][variant]", "${variant_code}")
