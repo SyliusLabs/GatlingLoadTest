@@ -13,8 +13,8 @@ final object Product {
       .exec(
         http("Show simple product")
           .get("/products/${product_slug}")
+          .check(form("""form[name="sylius_add_to_cart"]""").transform(fields => fields.mapValues(field => field.mkString)).saveAs("form"))
           .check(regex("""form name="sylius_add_to_cart" method="post" action="([^"]++)"""").saveAs("form_action"))
-          .check(regex("""name="sylius_add_to_cart\[_token\]" value="([^"]++)"""").saveAs("_token"))
       )
   }
 
@@ -29,8 +29,7 @@ final object Product {
           "Origin" -> "http://${domain}",
           "X-Requested-With" -> "XMLHttpRequest"
         ))
-        .formParam("sylius_add_to_cart[cartItem][quantity]", "1")
-        .formParam("sylius_add_to_cart[_token]", "${_token}")
+        .formParamMap("${form}")
     )
   }
 
@@ -39,9 +38,8 @@ final object Product {
       .exec(
         http("Show configurable product")
           .get("/products/${product_slug}")
+          .check(form("""form[name="sylius_add_to_cart"]""").transform(fields => fields.mapValues(field => field.mkString)).saveAs("form"))
           .check(regex("""form name="sylius_add_to_cart" method="post" action="([^"]++)"""").saveAs("form_action"))
-          .check(regex("""name="sylius_add_to_cart\[cartItem\]\[variant\]" required="required" value="([^"]++)" checked="checked"""").saveAs("variant_code"))
-          .check(regex("""name="sylius_add_to_cart\[_token\]" value="([^"]++)"""").saveAs("_token"))
       )
   }
 
@@ -56,9 +54,7 @@ final object Product {
           "Origin" -> "http://${domain}",
           "X-Requested-With" -> "XMLHttpRequest"
         ))
-        .formParam("sylius_add_to_cart[cartItem][variant]", "${variant_code}")
-        .formParam("sylius_add_to_cart[cartItem][quantity]", "1")
-        .formParam("sylius_add_to_cart[_token]", "${_token}")
+        .formParamMap("${form}")
     )
   }
 }
