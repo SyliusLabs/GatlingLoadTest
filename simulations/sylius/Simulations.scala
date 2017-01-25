@@ -10,14 +10,31 @@ final object Simulations {
   }
 
   def frontendLoadTest(settings: Settings) = {
-    scenario(settings.project.name + " Load Test (" + settings.load.numberOfUsers.toString + " users over " + settings.load.rampingTime.toString + " during " + settings.load.simulationTime.toString + ")")
+    scenario(settings.project.name + " Frontend Load Test (" + settings.load.numberOfUsers.toString + " users over " + settings.load.rampingTime.toString + " during " + settings.load.simulationTime.toString + ")")
       .during(settings.load.simulationTime) {
         randomSwitch(
           40d -> exec(initialiser(settings)).exec(Behaviours.browseCatalogAndAbandonCart),
-          25d -> exec(initialiser(settings)).exec(Behaviours.browseCatalog),
-          25d -> exec(initialiser(settings)).exec(Behaviours.browseAndSearchCatalog),
+          30d -> exec(initialiser(settings)).exec(Behaviours.browseCatalog),
+          20d -> exec(initialiser(settings)).exec(Behaviours.browseAndSearchCatalog),
           10d -> exec(initialiser(settings)).exec(Behaviours.browseCatalogAndCheckoutAsGuest)
         )
+      }
+  }
+
+  def frontendBrowsingLoadTest(settings: Settings) = {
+    scenario(settings.project.name + " Frontend Browsing Load Test (" + settings.load.numberOfUsers.toString + " users over " + settings.load.rampingTime.toString + " during " + settings.load.simulationTime.toString + ")")
+      .during(settings.load.simulationTime) {
+        randomSwitch(
+          70d -> exec(initialiser(settings)).exec(Behaviours.browseCatalog),
+          30d -> exec(initialiser(settings)).exec(Behaviours.browseAndSearchCatalog)
+        )
+      }
+  }
+
+  def frontendCheckoutLoadTest(settings: Settings) = {
+    scenario(settings.project.name + " Frontend Checkout Load Test (" + settings.load.numberOfUsers.toString + " users over " + settings.load.rampingTime.toString + " during " + settings.load.simulationTime.toString + ")")
+      .during(settings.load.simulationTime) {
+        exec(initialiser(settings)).exec(Behaviours.checkoutAsGuest)
       }
   }
 }
