@@ -8,7 +8,7 @@
 
 ## Usage
 
-`bin/gatling.sh -s sylius.SyliusLoadTest`
+`bin/gatling.sh -s sylius.FrontendLoadTest`
 
 You can configure the way it works by passing Java options to the process:
 
@@ -22,4 +22,4 @@ You can configure the way it works by passing Java options to the process:
 | `project.name`        | Project name
 | `project.domain`      | Project domain
 
-`JAVA_OPTS="-Dproject.domain=example.com" bin/gatling.sh -s sylius.SyliusLoadTest`
+`JAVA_OPTS="-Dproject.domain=example.com" bin/gatling.sh -s sylius.FrontendLoadTest`
