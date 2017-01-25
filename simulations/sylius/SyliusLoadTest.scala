@@ -12,10 +12,10 @@ final class SyliusLoadTest extends Simulation {
   private val simulation = scenario(settings.project.name + " Load Test (" + settings.load.numberOfUsers.toString + " users over " + settings.load.rampingTime.toString + " during " + settings.load.simulationTime.toString + ")")
     .during(settings.load.simulationTime) {
       randomSwitch(
-        40d -> exec(initialiser).exec(Behaviours.abandonedCart),
+        40d -> exec(initialiser).exec(Behaviours.browseCatalogAndAbandonCart),
         25d -> exec(initialiser).exec(Behaviours.browseCatalog),
-        25d -> exec(initialiser).exec(Behaviours.searchCatalog),
-        10d -> exec(initialiser).exec(Behaviours.checkoutAsGuest)
+        25d -> exec(initialiser).exec(Behaviours.browseAndSearchCatalog),
+        10d -> exec(initialiser).exec(Behaviours.browseCatalogAndCheckoutAsGuest)
       )
     }
 
