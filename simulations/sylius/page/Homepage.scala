@@ -8,7 +8,7 @@ final object Homepage {
   val show = {
     exec(
       http("Homepage")
-        .get("/")
+        .get("/en_US/")
     )
   }
 }

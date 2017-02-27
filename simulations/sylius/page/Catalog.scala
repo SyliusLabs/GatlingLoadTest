@@ -11,7 +11,7 @@ final object Catalog {
     feed(taxonsFeeder)
       .exec(
         http("Browse products in taxon")
-          .get("/taxons/${taxon_slug}")
+          .get("/en_US/taxons/${taxon_slug}")
       )
   }
 
@@ -19,7 +19,7 @@ final object Catalog {
     feed(taxonsFeeder)
       .exec(
         http("Search products in taxon")
-          .get("/taxons/${taxon_slug}?criteria%5Bsearch%5D%5Bvalue%5D=a")
+          .get("/en_US/taxons/${taxon_slug}?criteria%5Bsearch%5D%5Bvalue%5D=a")
       )
   }
 }

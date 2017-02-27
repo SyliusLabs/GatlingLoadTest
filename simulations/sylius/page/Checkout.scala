@@ -8,19 +8,19 @@ final object Checkout {
   val cart = {
     exec(
       http("Cart summary")
-        .get("/cart/")
+        .get("/en_US/cart/")
     )
   }
 
   val checkout = {
     exec(
       http("Checkout")
-        .get("/checkout/")
+        .get("/en_US/checkout/")
         .check(regex("""name="sylius_checkout_address\[_token\]" value="([^"]++)"""").saveAs("_token"))
     )
     .exec(
       http("Checkout addressing - AJAX province form")
-        .get("/ajax/render-province-form?countryCode=US")
+        .get("/en_US/ajax/render-province-form?countryCode=US")
         .headers(Map(
           "Accept" -> "*/*",
           "X-Requested-With" -> "XMLHttpRequest"
@@ -31,7 +31,7 @@ final object Checkout {
   val checkoutAddressingEmailValidation = {
     exec(
       http("Checkout addressing - AJAX email checking")
-        .get("/ajax/users/check?email=email%40address.com")
+        .get("/en_US/ajax/users/check?email=email%40address.com")
         .headers(Map(
           "Accept" -> "application/json, text/javascript, */*; q=0.01",
           "X-Requested-With" -> "XMLHttpRequest"
@@ -43,7 +43,7 @@ final object Checkout {
   val checkoutAddressing = {
     exec(
       http("Checkout addressing")
-        .post("/checkout/address")
+        .post("/en_US/checkout/address")
         .headers(Map(
           "Accept-Encoding" -> "gzip, deflate",
           "Origin" -> "http://${domain}"
@@ -77,7 +77,7 @@ final object Checkout {
   val checkoutShipping = {
     exec(
       http("Checkout shipping")
-        .post("/checkout/select-shipping")
+        .post("/en_US/checkout/select-shipping")
         .headers(Map(
           "Accept-Encoding" -> "gzip, deflate",
           "Origin" -> "http://${domain}"
@@ -93,7 +93,7 @@ final object Checkout {
   val checkoutPayment = {
     exec(
       http("Checkout payment")
-        .post("/checkout/select-payment")
+        .post("/en_US/checkout/select-payment")
         .headers(Map(
           "Accept-Encoding" -> "gzip, deflate",
           "Origin" -> "http://${domain}"
@@ -108,7 +108,7 @@ final object Checkout {
   val checkoutComplete = {
     exec(
       http("Checkout complete")
-        .post("/checkout/complete")
+        .post("/en_US/checkout/complete")
         .headers(Map(
           "Accept-Encoding" -> "gzip, deflate",
           "Origin" -> "http://${domain}"

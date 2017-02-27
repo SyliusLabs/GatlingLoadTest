@@ -12,7 +12,7 @@ final object Product {
     feed(simpleProductsFeeder)
       .exec(
         http("Show simple product")
-          .get("/products/${product_slug}")
+          .get("/en_US/products/${product_slug}")
           .check(form("""form[name="sylius_add_to_cart"]""").transform(fields => fields.mapValues(field => field.mkString)).saveAs("form"))
           .check(regex("""form name="sylius_add_to_cart" method="post" action="([^"]++)"""").saveAs("form_action"))
       )
@@ -37,7 +37,7 @@ final object Product {
     feed(configurableProductsFeeder)
       .exec(
         http("Show configurable product")
-          .get("/products/${product_slug}")
+          .get("/en_US/products/${product_slug}")
           .check(form("""form[name="sylius_add_to_cart"]""").transform(fields => fields.mapValues(field => field.mkString)).saveAs("form"))
           .check(regex("""form name="sylius_add_to_cart" method="post" action="([^"]++)"""").saveAs("form_action"))
       )
